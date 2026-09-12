@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    ports:
+      - "47821:3000"
+    env_file:
+      - .env.local
+    volumes:
+      - rsvp-data:/app/data
+
+  bot:
+    build:
+      context: .
+      target: bot
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    volumes:
+      - rsvp-data:/app/data
+
+volumes:
+  rsvp-data:

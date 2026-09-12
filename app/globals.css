@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Theme-adaptive tokens — LIGHT (white & beige) */
+    --ivory: 40 36% 99%;
+    --ink: 28 16% 20%;
+    --surface-alt: 35 44% 90%;
+
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.65);
+    --glass-shadow: 0 8px 32px -8px rgba(43, 38, 34, 0.12);
+    --field-bg: rgba(255, 255, 255, 0.7);
+
+    --hero-from: #ffffff;
+    --hero-via: #faf7f2;
+    --hero-to: #f5ead9;
+    --hero-glow: rgba(245, 234, 217, 0.9);
+
+    /* Veil over couple-photo section backgrounds (LIGHT) */
+    --scrim: 40 33% 98%;
+
+    /* shadcn-style tokens */
+    --background: 40 33% 98%;
+    --foreground: 30 12% 15%;
+    --border: 36 40% 85%;
+    --input: 36 40% 85%;
+    --ring: 33 38% 54%;
+  }
+
+  [data-theme="dark"] {
+    /* Theme-adaptive tokens — DARK (evening) */
+    --ivory: 30 25% 7%;
+    --ink: 40 38% 92%;
+    --surface-alt: 30 22% 10%;
+
+    --glass-bg: rgba(255, 255, 255, 0.045);
+    --glass-border: rgba(212, 180, 131, 0.16);
+    --glass-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.55);
+    --field-bg: rgba(255, 255, 255, 0.04);
+
+    --hero-from: #1a140e;
+    --hero-via: #120d09;
+    --hero-to: #0b0806;
+    --hero-glow: rgba(185, 147, 90, 0.18);
+
+    /* Veil over couple-photo section backgrounds (DARK) */
+    --scrim: 30 25% 7%;
+
+    --border: 36 18% 22%;
+    --input: 36 18% 22%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ivory text-ink font-sans;
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
+
+  ::selection {
+    @apply bg-gold/25 text-ink;
+  }
+}
+
+@layer components {
+  /* Glassmorphism panel that adapts to the active theme */
+  .glass-panel {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  /* Form field surface that adapts to the active theme */
+  .field-surface {
+    background-color: var(--field-bg);
+  }
+
+  /* Translucent veil layered over a couple-photo section background so that
+     headings and glass cards stay readable. Adapts to light / dark theme. */
+  .section-scrim {
+    background-image: linear-gradient(
+      180deg,
+      hsl(var(--scrim) / 0.74) 0%,
+      hsl(var(--scrim) / 0.5) 50%,
+      hsl(var(--scrim) / 0.74) 100%
+    );
+  }
+
+  /* Heavier veil for text-led "note" sections */
+  .section-scrim-strong {
+    background-image: linear-gradient(
+      180deg,
+      hsl(var(--scrim) / 0.88) 0%,
+      hsl(var(--scrim) / 0.72) 50%,
+      hsl(var(--scrim) / 0.88) 100%
+    );
+  }
+
+  /* Hero background gradient + top glow */
+  .hero-bg {
+    background-image: linear-gradient(
+      180deg,
+      var(--hero-from) 0%,
+      var(--hero-via) 50%,
+      var(--hero-to) 100%
+    );
+  }
+  .hero-glow {
+    background-image: radial-gradient(
+      ellipse at top,
+      var(--hero-glow),
+      transparent 60%
+    );
+  }
+
+  .text-gold-shimmer {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      100deg,
+      #b9935a 20%,
+      #e7cfa0 40%,
+      #d4b483 50%,
+      #b9935a 70%
+    );
+    background-size: 200% auto;
+    animation: shimmer 6s linear infinite;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-widest text-gold;
+  }
+
+  .divider-gold {
+    @apply mx-auto h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ivory;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gold/40;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold/60;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
