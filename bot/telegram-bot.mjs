@@ -179,6 +179,21 @@ async function main() {
     console.error("✗ Invalid TELEGRAM_BOT_TOKEN:", me.description);
     process.exit(1);
   }
+
+  // Registers the "/" command menu shown in Telegram's chat UI.
+  await fetch(`${API}/setMyCommands`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      commands: [
+        { command: "list", description: "Ցուցակել բոլոր հաստատումները" },
+        { command: "count", description: "Ընդհանուր թիվ" },
+        { command: "delete", description: "Ջնջել մեկը՝ /delete <համար>" },
+        { command: "clear", description: "Ջնջել բոլորը՝ /clear confirm" },
+      ],
+    }),
+  }).catch((err) => console.error("setMyCommands failed:", err.message));
+
   console.log(`✓ Bot @${me.result.username} started. Polling…`);
   if (!ADMIN) {
     console.log("ℹ️  TELEGRAM_CHAT_ID not set — message the bot to get your id.");
