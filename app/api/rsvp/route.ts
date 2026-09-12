@@ -37,8 +37,12 @@ export async function POST(request: Request) {
       ? `✅ Գալիս է · 👥 ${entry.guests} հոգի`
       : "❌ Չի կարող գալ";
   const side = entry.side === "groom" ? "Փեսայի կողմից" : "Հարսի կողմից";
+  const safeName = entry.name.replace(
+    /[&<>"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!
+  );
   await notifyTelegram(
-    `🎉 <b>Նոր հաստատում</b>\n\n👤 <b>${entry.name}</b>\n💍 ${side}\n${status}`
+    `🎉 <b>Նոր հաստատում</b>\n\n👤 <b>${safeName}</b>\n💍 ${side}\n${status}`
   );
 
   return NextResponse.json({ ok: true });

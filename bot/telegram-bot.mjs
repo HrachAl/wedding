@@ -4,8 +4,10 @@
  *
  * - Reads submissions from data/rsvp.json (written by the /api/rsvp route).
  * - Commands (organisers only):
- *     /list   — every confirmation (name, going/not, guests)
- *     /count  — totals: responses, going + total people, not coming
+ *     /list             — every confirmation (name, going/not, guests)
+ *     /count            — totals: responses, going + total people, not coming
+ *     /delete <number>  — delete one entry by its /list number
+ *     /clear confirm    — delete ALL entries (test cleanup)
  *
  * Run from the project root:
  *     node --env-file=.env.local bot/telegram-bot.mjs
@@ -15,7 +17,7 @@
  * organisers' chat; if it's empty the bot replies with your chat id so you can
  * set it.
  */
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -36,6 +38,17 @@ async function readEntries() {
   } catch {
     return [];
   }
+}
+
+async function writeEntries(entries) {
+  await writeFile(FILE, JSON.stringify(entries, null, 2), "utf8");
+}
+
+function escapeHtml(str) {
+  return String(str).replace(
+    /[&<>"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
+  );
 }
 
 async function send(chatId, text) {
@@ -97,6 +110,35 @@ async function handle(msg) {
     return;
   }
 
+  if (text.startsWith("/clear")) {
+    if (text !== "/clear confirm") {
+      await send(
+        chatId,
+        "⚠️ Սա կջնջի ԲՈԼՈՐ պատասխանները։ Հաստատելու համար գրեք՝\n/clear confirm"
+      );
+      return;
+    }
+    await writeEntries([]);
+    await send(chatId, "🗑 Բոլոր պատասխանները ջնջվեցին։");
+    return;
+  }
+
+  if (text.startsWith("/delete")) {
+    const entries = await readEntries();
+    const idx = Number(text.split(/\s+/)[1]);
+    if (!idx || idx < 1 || idx > entries.length) {
+      await send(
+        chatId,
+        `Սխալ համար։ Օգտագործեք /list-ից համարը (1-${entries.length})։\n/delete <համար>`
+      );
+      return;
+    }
+    const [removed] = entries.splice(idx - 1, 1);
+    await writeEntries(entries);
+    await send(chatId, `🗑 Ջնջվեց <b>${escapeHtml(removed.name)}</b>`);
+    return;
+  }
+
   const entries = await readEntries();
   const s = summarize(entries);
 
@@ -113,7 +155,7 @@ async function handle(msg) {
     const lines = entries.map((e, i) => {
       const st = e.attending === "yes" ? `✅ ${e.guests} հոգի` : "❌";
       const tag = sideTag(e);
-      return `${i + 1}. <b>${e.name}</b> ${tag ? `(${tag})` : ""} — ${st}`;
+      return `${i + 1}. <b>${escapeHtml(e.name)}</b> ${tag ? `(${tag})` : ""} — ${st}`;
     });
     for (let i = 0; i < lines.length; i += MAX_LINES_PER_MSG) {
       const chunk = lines.slice(i, i + MAX_LINES_PER_MSG).join("\n");
@@ -126,7 +168,7 @@ async function handle(msg) {
 
   await send(
     chatId,
-    "👋 Հրամաններ՝\n/list — բոլոր հաստատումները\n/count — ընդհանուր թիվ"
+    "👋 Հրամաններ՝\n/list — բոլոր հաստատումները\n/count — ընդհանուր թիվ\n/delete <համար> — ջնջել մեկը\n/clear confirm — ջնջել բոլորը"
   );
 }
 
