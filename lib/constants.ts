@@ -72,7 +72,7 @@ export const NOTES: Record<"presence" | "children", NoteContent> = {
   children: {
     id: "note-children",
     eyebrow: "Փոքրիկ խնդրանք",
-    text: "Խնդրում ենք հարսի պարի ժամանակ զերծ պահել երեխաներին և լինել ուշադիր",
+    text: "Խնդրում ենք հարսանեկան արարողության ընթացքում ուշադրություն դարձնել փոքրիկներին և հոգ տանել նրանց անվտանգության մասին։ 🤍",
     bg: "/photos/note.jpg",
     intensity: "strong",
   },

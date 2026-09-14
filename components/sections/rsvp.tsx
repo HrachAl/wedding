@@ -9,7 +9,6 @@ import { ConfettiBurst } from "@/components/effects/confetti-burst";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { SectionPhoto } from "@/components/section-photo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -170,8 +169,6 @@ export function Rsvp() {
             </AnimatePresence>
           </div>
         </Reveal>
-
-        <SectionPhoto src="/photos/rsvp.jpg" />
       </div>
     </section>
   );
