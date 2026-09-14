@@ -57,7 +57,7 @@ function HeroCountdown() {
             max={16}
             className="min-w-[64px] rounded-2xl sm:min-w-[76px]"
           >
-            <div className="flex h-full flex-col items-center rounded-2xl border border-white/60 bg-white/45 px-3 py-3 shadow-soft backdrop-blur-md sm:py-4">
+            <div className="glass-panel flex h-full flex-col items-center rounded-2xl px-3 py-3 sm:py-4">
               <div className="relative h-[1.1em] overflow-hidden font-serif text-3xl font-semibold tabular-nums leading-none text-ink sm:text-4xl">
                 <AnimatePresence mode="popLayout" initial={false}>
                   <motion.span
@@ -101,13 +101,13 @@ export function Hero() {
         blurDataURL={BLUR["/photos/hero.jpg"]}
         className="animate-kenburns object-cover object-[50%_20%] sm:object-[50%_28%]"
       />
-      {/* Light veil for text legibility (white & beige theme) */}
+      {/* Veil for text legibility — theme-adaptive: light cream in light mode, dark in dark mode */}
       <div
         aria-hidden
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(250,247,242,0.72) 0%, rgba(250,247,242,0.5) 35%, rgba(250,247,242,0.55) 65%, rgba(250,247,242,0.82) 100%)",
+            "linear-gradient(180deg, hsl(var(--scrim) / 0.72) 0%, hsl(var(--scrim) / 0.5) 35%, hsl(var(--scrim) / 0.55) 65%, hsl(var(--scrim) / 0.82) 100%)",
         }}
       />
       <div
@@ -115,7 +115,7 @@ export function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 45% at 50% 46%, rgba(252,249,244,0.75) 0%, transparent 70%)",
+            "radial-gradient(60% 45% at 50% 46%, hsl(var(--scrim) / 0.75) 0%, transparent 70%)",
         }}
       />
       <div className="absolute inset-0">

@@ -34,7 +34,7 @@ export function SectionPhoto({
       <Tilt3D max={9} scale={1.02} className="rounded-3xl">
         <div
           ref={ref}
-          className={`relative ${aspectClass} w-full overflow-hidden rounded-3xl border-[3px] border-white shadow-soft ring-1 ring-gold/15`}
+          className={`relative ${aspectClass} w-full overflow-hidden rounded-3xl border-[3px] border-ivory shadow-soft ring-1 ring-gold/15`}
         >
           <motion.div style={{ y }} className="absolute inset-[-9%]">
             <Image

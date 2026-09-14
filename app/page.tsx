@@ -6,7 +6,6 @@ import { Calendar } from "@/components/sections/calendar";
 import { Footer } from "@/components/sections/footer";
 import { Hero } from "@/components/sections/hero";
 import { Location } from "@/components/sections/location";
-import { NamesBand } from "@/components/sections/names-band";
 import { NoteSection } from "@/components/sections/note-section";
 import { Rsvp } from "@/components/sections/rsvp";
 import { Schedule } from "@/components/sections/schedule";
@@ -32,7 +31,6 @@ export default function Home() {
         <Calendar />
         <Schedule />
         <Location />
-        <NamesBand />
         <NoteSection note={NOTES.children} tone="ivory" />
         <Rsvp />
         <Footer />

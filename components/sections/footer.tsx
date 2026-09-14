@@ -6,11 +6,11 @@ import { WEDDING } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-night py-20 text-center text-white sm:py-24">
+    <footer className="relative overflow-hidden bg-ivory py-20 text-center text-ink sm:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(185,147,90,0.18),_transparent_65%)]" />
       <Reveal className="container relative">
         <MonogramDraw className="mx-auto mb-10 h-20 w-20" />
-        <p className="font-serif text-2xl font-light italic text-champagne sm:text-3xl">
+        <p className="font-serif text-2xl font-light italic text-gold sm:text-3xl">
           {WEDDING.footerNote}
         </p>
 
@@ -25,7 +25,7 @@ export function Footer() {
           <span className="text-gold">🤍</span> {WEDDING.bride}
         </h3>
 
-        <p className="mt-10 text-xs uppercase tracking-widest text-white/40">
+        <p className="mt-10 text-xs uppercase tracking-widest text-ink/50">
           {WEDDING.dateLabel}
         </p>
       </Reveal>
