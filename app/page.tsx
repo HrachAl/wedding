@@ -10,7 +10,6 @@ import { NoteSection } from "@/components/sections/note-section";
 import { Rsvp } from "@/components/sections/rsvp";
 import { Schedule } from "@/components/sections/schedule";
 import { Welcome } from "@/components/sections/welcome";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { NOTES } from "@/lib/constants";
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
 
       {/* Floating controls + ambient layers */}
       <ScrollNav />
-      <ThemeToggle />
       <MusicToggle />
       <CursorGlow />
 

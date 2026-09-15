@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Serif_Armenian, Noto_Sans_Armenian } from "next/font/google";
 
-import { ThemeScript } from "@/components/theme-script";
 import { WEDDING } from "@/lib/constants";
 import "./globals.css";
 
@@ -39,14 +38,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="hy"
-      className={`${serif.variable} ${sans.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <ThemeScript />
-      </head>
+    <html lang="hy" className={`${serif.variable} ${sans.variable}`}>
       <body className="overflow-x-hidden antialiased">{children}</body>
     </html>
   );

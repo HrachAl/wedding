@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Theme-adaptive tokens — LIGHT (white & beige) */
+    /* Theme tokens — light & beige only */
     --ivory: 40 36% 99%;
     --ink: 28 16% 20%;
     --surface-alt: 35 44% 90%;
@@ -19,7 +19,7 @@
     --hero-to: #f5ead9;
     --hero-glow: rgba(245, 234, 217, 0.9);
 
-    /* Veil over couple-photo section backgrounds (LIGHT) */
+    /* Veil over couple-photo section backgrounds */
     --scrim: 40 33% 98%;
 
     /* shadcn-style tokens */
@@ -28,29 +28,6 @@
     --border: 36 40% 85%;
     --input: 36 40% 85%;
     --ring: 33 38% 54%;
-  }
-
-  [data-theme="dark"] {
-    /* Theme-adaptive tokens — DARK (evening) */
-    --ivory: 30 25% 7%;
-    --ink: 40 38% 92%;
-    --surface-alt: 30 22% 10%;
-
-    --glass-bg: rgba(255, 255, 255, 0.045);
-    --glass-border: rgba(212, 180, 131, 0.16);
-    --glass-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.55);
-    --field-bg: rgba(255, 255, 255, 0.04);
-
-    --hero-from: #1a140e;
-    --hero-via: #120d09;
-    --hero-to: #0b0806;
-    --hero-glow: rgba(185, 147, 90, 0.18);
-
-    /* Veil over couple-photo section backgrounds (DARK) */
-    --scrim: 30 25% 7%;
-
-    --border: 36 18% 22%;
-    --input: 36 18% 22%;
   }
 
   * {
