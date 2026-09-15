@@ -14,14 +14,20 @@
  * (or `npm run bot`)
  *
  * Requires TELEGRAM_BOT_TOKEN. TELEGRAM_CHAT_ID restricts the commands to the
- * organisers' chat; if it's empty the bot replies with your chat id so you can
- * set it.
+ * organisers' chats — list several ids separated by commas (e.g.
+ * "111,222") to let more than one person use the bot. If it's empty the bot
+ * replies with your chat id so you can add it.
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const ADMIN = String(process.env.TELEGRAM_CHAT_ID || "").trim();
+const ADMINS = new Set(
+  String(process.env.TELEGRAM_CHAT_ID || "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean)
+);
 
 if (!TOKEN) {
   console.error("✗ TELEGRAM_BOT_TOKEN is not set. See .env.example.");
@@ -98,14 +104,14 @@ async function handle(msg) {
   const chatId = msg.chat.id;
   const text = (msg.text || "").trim();
 
-  if (!ADMIN) {
+  if (!ADMINS.size) {
     await send(
       chatId,
-      `👋 Ձեր chat id-ն է՝ <code>${chatId}</code>\n\nԱվելացրեք այն <code>.env.local</code>-ում որպես <code>TELEGRAM_CHAT_ID</code> և վերագործարկեք բոտը։`
+      `👋 Ձեր chat id-ն է՝ <code>${chatId}</code>\n\nԱվելացրեք այն <code>.env.local</code>-ում որպես <code>TELEGRAM_CHAT_ID</code> և վերագործարկեք բոտը։ Մի քանի կազմակերպիչի համար id-երը գրեք ստորակետով բաժանված՝ <code>111,222</code>։`
     );
     return;
   }
-  if (String(chatId) !== ADMIN) {
+  if (!ADMINS.has(String(chatId))) {
     await send(chatId, "⛔️ Այս բոտը միայն կազմակերպիչների համար է։");
     return;
   }
@@ -195,8 +201,10 @@ async function main() {
   }).catch((err) => console.error("setMyCommands failed:", err.message));
 
   console.log(`✓ Bot @${me.result.username} started. Polling…`);
-  if (!ADMIN) {
+  if (!ADMINS.size) {
     console.log("ℹ️  TELEGRAM_CHAT_ID not set — message the bot to get your id.");
+  } else {
+    console.log(`ℹ️  Organisers (${ADMINS.size}): ${[...ADMINS].join(", ")}`);
   }
 
   let offset = 0;
